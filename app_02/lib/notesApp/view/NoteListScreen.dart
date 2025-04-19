@@ -4,8 +4,6 @@ import 'package:app_02/notesApp/model/Note.dart';
 import 'package:app_02/notesApp/view/NoteForm.dart';
 import 'package:app_02/notesApp/view/NoteItem.dart';
 
-import '../../noteApp_API/view/NoteItem.dart';
-
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({Key? key}) : super(key: key);
 
