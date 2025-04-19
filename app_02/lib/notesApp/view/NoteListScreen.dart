@@ -4,6 +4,8 @@ import 'package:app_02/notesApp/model/Note.dart';
 import 'package:app_02/notesApp/view/NoteForm.dart';
 import 'package:app_02/notesApp/view/NoteItem.dart';
 
+import '../../noteApp_API/view/NoteItem.dart';
+
 class NoteListScreen extends StatefulWidget {
   const NoteListScreen({Key? key}) : super(key: key);
 
@@ -99,8 +101,8 @@ class _NoteListScreenState extends State<NoteListScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: 'Tìm kiếm ghi chú',
+                prefixIcon: Icon(Icons.search),
                 border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
