@@ -93,7 +93,6 @@ class _NoteFormState extends State<NoteForm> {
         modifiedAt: now,
         tags: _tags.isNotEmpty ? _tags : null,
         color: _color,
-        isCompleted: widget.note?.isCompleted ?? false,
       );
       Navigator.pop(context, note);
     }

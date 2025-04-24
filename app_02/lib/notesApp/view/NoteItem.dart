@@ -7,7 +7,6 @@ class NoteItem extends StatelessWidget {
   final Note note;
   final VoidCallback onDelete;
   final Function(Note) onEdit;
-  final Function(Note) onToggleComplete;
   final bool isGridView;
 
   const NoteItem({
@@ -15,7 +14,6 @@ class NoteItem extends StatelessWidget {
     required this.note,
     required this.onDelete,
     required this.onEdit,
-    required this.onToggleComplete,
     required this.isGridView,
   }) : super(key: key);
 
@@ -31,6 +29,30 @@ class NoteItem extends StatelessWidget {
     }
   }
 
+  // Dialog for confirming deletion
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Xác nhận xóa'),
+        content: const Text('Bạn có chắc chắn muốn xóa ghi chú này?'),
+        actions: [
+          TextButton(
+            child: const Text('Hủy'),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: const Text('Xóa'),
+            onPressed: () {
+              onDelete();
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,7 +65,9 @@ class NoteItem extends StatelessWidget {
         );
       },
       child: Card(
-        color: note.color != null ? Color(int.parse('0xFF${note.color!.replaceFirst('#', '')}')) : _getPriorityColor(),
+        color: note.color != null
+            ? Color(int.parse('0xFF${note.color!.replaceFirst('#', '')}'))
+            : _getPriorityColor(),
         margin: const EdgeInsets.all(8),
         child: isGridView
             ? Column(
@@ -53,10 +77,9 @@ class NoteItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 note.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
-                  decoration: note.isCompleted ? TextDecoration.lineThrough : null,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -82,44 +105,26 @@ class NoteItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Wrap(
                   spacing: 4,
-                  children: note.tags!.map((tag) => Chip(label: Text(tag, style: const TextStyle(fontSize: 10)))).toList(),
+                  children: note.tags!
+                      .map((tag) => Chip(
+                    label: Text(
+                      tag,
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                  ))
+                      .toList(),
                 ),
               ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(note.isCompleted ? Icons.check_circle : Icons.check_circle_outline),
-                  onPressed: () => onToggleComplete(note),
-                ),
-                IconButton(
                   icon: const Icon(Icons.edit, color: Colors.blue),
                   onPressed: () => onEdit(note),
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Xác nhận xóa'),
-                        content: const Text('Bạn có chắc chắn muốn xóa ghi chú này?'),
-                        actions: [
-                          TextButton(
-                            child: const Text('Hủy'),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          TextButton(
-                            child: const Text('Xóa'),
-                            onPressed: () {
-                              onDelete();
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+                  onPressed: () => _showDeleteDialog(context),
                 ),
               ],
             ),
@@ -130,7 +135,6 @@ class NoteItem extends StatelessWidget {
             note.title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              decoration: note.isCompleted ? TextDecoration.lineThrough : null,
             ),
           ),
           subtitle: Column(
@@ -148,7 +152,14 @@ class NoteItem extends StatelessWidget {
               if (note.tags != null && note.tags!.isNotEmpty)
                 Wrap(
                   spacing: 4,
-                  children: note.tags!.map((tag) => Chip(label: Text(tag, style: const TextStyle(fontSize: 10)))).toList(),
+                  children: note.tags!
+                      .map((tag) => Chip(
+                    label: Text(
+                      tag,
+                      style: const TextStyle(fontSize: 10),
+                    ),
+                  ))
+                      .toList(),
                 ),
             ],
           ),
@@ -156,37 +167,12 @@ class NoteItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: Icon(note.isCompleted ? Icons.check_circle : Icons.check_circle_outline),
-                onPressed: () => onToggleComplete(note),
-              ),
-              IconButton(
                 icon: const Icon(Icons.edit, color: Colors.blue),
                 onPressed: () => onEdit(note),
               ),
               IconButton(
                 icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Xác nhận xóa'),
-                      content: const Text('Bạn có chắc chắn muốn xóa ghi chú này?'),
-                      actions: [
-                        TextButton(
-                          child: const Text('Hủy'),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        TextButton(
-                          child: const Text('Xóa'),
-                          onPressed: () {
-                            onDelete();
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                onPressed: () => _showDeleteDialog(context),
               ),
             ],
           ),

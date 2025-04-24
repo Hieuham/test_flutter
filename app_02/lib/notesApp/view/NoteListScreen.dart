@@ -17,7 +17,7 @@ class _NoteListScreenState extends State<NoteListScreen> {
   int? _filterPriority;
   String _searchQuery = '';
   final _searchController = TextEditingController();
-  String _sortBy = 'priority'; // Sắp xếp theo ưu tiên hoặc thời gian
+  String _sortBy = 'priority';
 
   @override
   void initState() {
@@ -25,7 +25,8 @@ class _NoteListScreenState extends State<NoteListScreen> {
     _refreshNotes();
   }
 
-  Future<void> _refreshNotes() async {
+
+  void _refreshNotes() {
     setState(() {
       if (_searchQuery.isNotEmpty) {
         _notesFuture = NoteDatabaseHelper.instance.searchNotes(_searchQuery);
@@ -51,42 +52,57 @@ class _NoteListScreenState extends State<NoteListScreen> {
       appBar: AppBar(
         title: const Text('Danh sách ghi chú'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _refreshNotes,
-          ),
           PopupMenuButton<String>(
             onSelected: (value) {
               setState(() {
-                if (value == 'grid') {
-                  _isGridView = true;
-                } else if (value == 'list') {
-                  _isGridView = false;
-                } else if (value == 'priority') {
-                  _sortBy = 'priority';
-                } else if (value == 'time') {
-                  _sortBy = 'time';
-                } else if (value == 'filter_low') {
-                  _filterPriority = 1;
-                } else if (value == 'filter_medium') {
-                  _filterPriority = 2;
-                } else if (value == 'filter_high') {
-                  _filterPriority = 3;
-                } else if (value == 'filter_none') {
-                  _filterPriority = null;
+                switch (value) {
+                  case 'refresh':
+                    _refreshNotes();
+                    break;
+                  case 'grid':
+                    _isGridView = true;
+                    break;
+                  case 'list':
+                    _isGridView = false;
+                    break;
+                  case 'sort_priority':
+                    _sortBy = 'priority';
+                    break;
+                  case 'sort_time':
+                    _sortBy = 'time';
+                    break;
+                  case 'filter_low':
+                    _filterPriority = 1;
+                    _refreshNotes();
+                    break;
+                  case 'filter_medium':
+                    _filterPriority = 2;
+                    _refreshNotes();
+                    break;
+                  case 'filter_high':
+                    _filterPriority = 3;
+                    _refreshNotes();
+                    break;
+                  case 'filter_none':
+                    _filterPriority = null;
+                    _refreshNotes();
+                    break;
                 }
-                _refreshNotes();
               });
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(value: 'grid', child: Text('Chế độ Grid')),
-              const PopupMenuItem(value: 'list', child: Text('Chế độ List')),
-              const PopupMenuItem(value: 'priority', child: Text('Sắp xếp theo ưu tiên')),
-              const PopupMenuItem(value: 'time', child: Text('Sắp xếp theo thời gian')),
+              const PopupMenuItem(value: 'refresh', child: Text('Làm mới')),
+              const PopupMenuDivider(),
+              const PopupMenuItem(value: 'sort_priority', child: Text('Sắp xếp: Ưu tiên')),
+              const PopupMenuItem(value: 'sort_time', child: Text('Sắp xếp: Thời gian')),
+              const PopupMenuDivider(),
               const PopupMenuItem(value: 'filter_low', child: Text('Lọc: Ưu tiên thấp')),
               const PopupMenuItem(value: 'filter_medium', child: Text('Lọc: Ưu tiên trung bình')),
               const PopupMenuItem(value: 'filter_high', child: Text('Lọc: Ưu tiên cao')),
               const PopupMenuItem(value: 'filter_none', child: Text('Bỏ lọc')),
+              const PopupMenuDivider(),
+              const PopupMenuItem(value: 'grid', child: Text('Hiển thị: Grid')),
+              const PopupMenuItem(value: 'list', child: Text('Hiển thị: List')),
             ],
           ),
         ],
@@ -99,24 +115,20 @@ class _NoteListScreenState extends State<NoteListScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 labelText: 'Tìm kiếm ghi chú',
-                prefixIcon: Icon(Icons.search),
-                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     _searchController.clear();
-                    setState(() {
-                      _searchQuery = '';
-                      _refreshNotes();
-                    });
+                    _searchQuery = '';
+                    _refreshNotes();
                   },
                 ),
+                border: const OutlineInputBorder(),
               ),
               onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                  _refreshNotes();
-                });
+                _searchQuery = value;
+                _refreshNotes();
               },
             ),
           ),
@@ -140,30 +152,18 @@ class _NoteListScreenState extends State<NoteListScreen> {
                     ),
                     itemCount: notes.length,
                     itemBuilder: (context, index) {
-                      final note = notes[index];
                       return NoteItem(
-                        note: note,
+                        note: notes[index],
                         isGridView: _isGridView,
                         onDelete: () async {
-                          await NoteDatabaseHelper.instance.deleteNote(note.id!);
+                          await NoteDatabaseHelper.instance.deleteNote(notes[index].id!);
                           _refreshNotes();
                         },
-                        onEdit: (updatedNote) async {
+                        onEdit: (updatedNote) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => NoteForm(note: updatedNote),
-                            ),
-                          ).then((result) {
-                            if (result != null) {
-                              _refreshNotes();
-                            }
-                          });
-                        },
-                        onToggleComplete: (note) async {
-                          final updatedNote = note.copyWith(isCompleted: !note.isCompleted);
-                          await NoteDatabaseHelper.instance.updateNote(updatedNote);
-                          _refreshNotes();
+                            MaterialPageRoute(builder: (_) => NoteForm(note: updatedNote)),
+                          ).then((_) => _refreshNotes());
                         },
                       );
                     },
@@ -171,30 +171,18 @@ class _NoteListScreenState extends State<NoteListScreen> {
                       : ListView.builder(
                     itemCount: notes.length,
                     itemBuilder: (context, index) {
-                      final note = notes[index];
                       return NoteItem(
-                        note: note,
+                        note: notes[index],
                         isGridView: _isGridView,
                         onDelete: () async {
-                          await NoteDatabaseHelper.instance.deleteNote(note.id!);
+                          await NoteDatabaseHelper.instance.deleteNote(notes[index].id!);
                           _refreshNotes();
                         },
-                        onEdit: (updatedNote) async {
+                        onEdit: (updatedNote) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => NoteForm(note: updatedNote),
-                            ),
-                          ).then((result) {
-                            if (result != null) {
-                              _refreshNotes();
-                            }
-                          });
-                        },
-                        onToggleComplete: (note) async {
-                          final updatedNote = note.copyWith(isCompleted: !note.isCompleted);
-                          await NoteDatabaseHelper.instance.updateNote(updatedNote);
-                          _refreshNotes();
+                            MaterialPageRoute(builder: (_) => NoteForm(note: updatedNote)),
+                          ).then((_) => _refreshNotes());
                         },
                       );
                     },
@@ -206,17 +194,17 @@ class _NoteListScreenState extends State<NoteListScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: () async {
           final newNote = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const NoteForm()),
+            MaterialPageRoute(builder: (_) => const NoteForm()),
           );
           if (newNote != null) {
             await NoteDatabaseHelper.instance.insertNote(newNote);
             _refreshNotes();
           }
         },
+        child: const Icon(Icons.add),
       ),
     );
   }

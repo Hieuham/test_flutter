@@ -7,7 +7,6 @@ class Note {
   DateTime modifiedAt;
   List<String>? tags;
   String? color;
-  bool isCompleted; // Tính năng nâng cao: Đánh dấu hoàn thành
 
   Note({
     this.id,
@@ -18,7 +17,6 @@ class Note {
     required this.modifiedAt,
     this.tags,
     this.color,
-    this.isCompleted = false,
   });
 
   // Chuyển đối tượng thành Map để lưu vào database
@@ -32,7 +30,6 @@ class Note {
       'modifiedAt': modifiedAt.toIso8601String(),
       'tags': tags?.join(','), // Lưu tags dưới dạng chuỗi, phân tách bằng dấu phẩy
       'color': color,
-      'isCompleted': isCompleted ? 1 : 0,
     };
   }
 
@@ -47,7 +44,6 @@ class Note {
       modifiedAt: DateTime.parse(map['modifiedAt']),
       tags: map['tags'] != null ? (map['tags'] as String).split(',') : null,
       color: map['color'],
-      isCompleted: map['isCompleted'] == 1,
     );
   }
 
@@ -61,7 +57,6 @@ class Note {
     DateTime? modifiedAt,
     List<String>? tags,
     String? color,
-    bool? isCompleted,
   }) {
     return Note(
       id: id ?? this.id,
@@ -72,12 +67,11 @@ class Note {
       modifiedAt: modifiedAt ?? this.modifiedAt,
       tags: tags ?? this.tags,
       color: color ?? this.color,
-      isCompleted: isCompleted ?? this.isCompleted,
     );
   }
 
   @override
   String toString() {
-    return 'Note(id: $id, title: $title, priority: $priority, isCompleted: $isCompleted)';
+    return 'Note(id: $id, title: $title, priority: $priority)';
   }
 }
