@@ -30,7 +30,10 @@ class TodoListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Todo List')),
+      appBar: AppBar(
+          title: Text('Todo List'),
+          centerTitle: true,
+      ),
       body: ListView.builder(
         itemCount: todos.length,
         itemBuilder: (context, index) {
