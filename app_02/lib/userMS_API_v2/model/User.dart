@@ -26,7 +26,7 @@ class User {
       'dateOfBirth': dateOfBirth.toIso8601String(),
     };
   }
-  
+
   // Chuyển đối tượng User thành Map
   Map<String, dynamic> toMap() {
     return toData();

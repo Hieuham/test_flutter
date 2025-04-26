@@ -40,27 +40,27 @@ class MyGestures extends StatelessWidget {
 
       body: Center(
         child: Column(
-          children: [
-            SizedBox(height: 50),
-            // GestureDetector - Bắt được các
-            GestureDetector(
-              onTap: (){
-                print("Nội dung được tap!");
-              },
-              onDoubleTap: (){
-                print("Nội dung được tap 2 cái!");
-              },
-              onPanUpdate: (details){
-                print('Kéo - di chuyển: ${details.delta}');
-              },
-              child: Container(
-                width: 100,
-                height: 100,
-                color: Colors.blue,
-                child: Center(child: Text("Chạm vào tôi!")),
-              ),
-            )
-          ]
+            children: [
+              SizedBox(height: 50),
+              // GestureDetector - Bắt được các
+              GestureDetector(
+                onTap: (){
+                  print("Nội dung được tap!");
+                },
+                onDoubleTap: (){
+                  print("Nội dung được tap 2 cái!");
+                },
+                onPanUpdate: (details){
+                  print('Kéo - di chuyển: ${details.delta}');
+                },
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.blue,
+                  child: Center(child: Text("Chạm vào tôi!")),
+                ),
+              )
+            ]
         ),
       ),
 

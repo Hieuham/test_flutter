@@ -18,10 +18,10 @@ class MyAppBar extends StatelessWidget{
         elevation: 4,
         actions: [
           IconButton(
-              onPressed:() {
-                print("b1");
-              },
-              icon: Icon(Icons.search),
+            onPressed:() {
+              print("b1");
+            },
+            icon: Icon(Icons.search),
           ),
           IconButton(
             onPressed: (){

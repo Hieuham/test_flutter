@@ -289,15 +289,15 @@ class _FormBasicDemoSate extends State<FormBasicDemo> {
               SizedBox(height: 20,),
 
               CheckboxListTile(
-                  title: Text("Đồng ý với điều khoản của công ty ABC."),
-                  value: _isAgreed,
-                  onChanged: (value){
-                    setState(() {
-                      _isAgreed = value!;
-                      print("Đồng ý : $_isAgreed");
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
+                title: Text("Đồng ý với điều khoản của công ty ABC."),
+                value: _isAgreed,
+                onChanged: (value){
+                  setState(() {
+                    _isAgreed = value!;
+                    print("Đồng ý : $_isAgreed");
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading,
               ),
 
 

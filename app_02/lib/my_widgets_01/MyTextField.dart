@@ -39,90 +39,90 @@ class MyTextField extends StatelessWidget {
       ),
 
       body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: 50),
-                /*
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 50),
+              /*
                 TextField là widget cho phép người dùng
                 nhập văn bản thông qua bàn phím.
                 Đây là thành phần thiết yếu trong hầu hết các ứng dụng,
                 từ biểu mẫu đăng nhập, tìm kiếm,
                 đến nhập liệu trong các ứng dụng phức tạp.
                 */
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: "Họ và tên",
-                    hintText: "Nhập vào họ và tên của bạn",
-                    border: OutlineInputBorder(),
-                  ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Họ và tên",
+                  hintText: "Nhập vào họ và tên của bạn",
+                  border: OutlineInputBorder(),
                 ),
-                SizedBox(height: 30),
+              ),
+              SizedBox(height: 30),
 
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    hintText: "Example@gmail.com",
-                    helperText: "Nhập vào email cá nhân",
-                    prefixIcon: Icon(Icons.email),
-                    suffixIcon: Icon(Icons.clear),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    filled: true,
-                    fillColor: Colors.lightGreenAccent,
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  hintText: "Example@gmail.com",
+                  helperText: "Nhập vào email cá nhân",
+                  prefixIcon: Icon(Icons.email),
+                  suffixIcon: Icon(Icons.clear),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
                   ),
+                  filled: true,
+                  fillColor: Colors.lightGreenAccent,
                 ),
+              ),
 
-                SizedBox(height: 30),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: "Số điện thoại",
-                    hintText: "Nhập vào số điện thoại của bạn",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.phone,
+              SizedBox(height: 30),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Số điện thoại",
+                  hintText: "Nhập vào số điện thoại của bạn",
+                  border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.phone,
+              ),
 
-                SizedBox(height: 30),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: "Ngày sinh",
-                    hintText: "Nhập vào ngày sinh của bạn",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.datetime,
+              SizedBox(height: 30),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Ngày sinh",
+                  hintText: "Nhập vào ngày sinh của bạn",
+                  border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.datetime,
+              ),
 
-                SizedBox(height: 30),
-                TextField(
-                  decoration: InputDecoration(
-                    labelText: "Mật khẩu",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.datetime,
-                  obscureText: true,
-                  obscuringCharacter: '*',
+              SizedBox(height: 30),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Mật khẩu",
+                  border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.datetime,
+                obscureText: true,
+                obscuringCharacter: '*',
+              ),
 
-                SizedBox(height: 30),
-                TextField(
-                  onChanged: (value){
-                    print("Đang nhập: $value");
-                  },
-                  onSubmitted: (value){
-                    print("Đã hoàn thành nội dung: $value");
-                  },
-                  decoration: InputDecoration(
-                    labelText: "Câu hỏi bí mật",
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.datetime,
+              SizedBox(height: 30),
+              TextField(
+                onChanged: (value){
+                  print("Đang nhập: $value");
+                },
+                onSubmitted: (value){
+                  print("Đã hoàn thành nội dung: $value");
+                },
+                decoration: InputDecoration(
+                  labelText: "Câu hỏi bí mật",
+                  border: OutlineInputBorder(),
                 ),
-              ],
-            ),
+                keyboardType: TextInputType.datetime,
+              ),
+            ],
           ),
+        ),
       ),
 
       floatingActionButton: FloatingActionButton(

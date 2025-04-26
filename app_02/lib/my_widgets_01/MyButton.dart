@@ -18,10 +18,10 @@ class MyButton extends StatelessWidget{
         elevation: 4,
         actions: [
           IconButton(
-              onPressed:() {
-                print("b1");
-              },
-              icon: Icon(Icons.search),
+            onPressed:() {
+              print("b1");
+            },
+            icon: Icon(Icons.search),
           ),
           IconButton(
             onPressed: (){
@@ -76,15 +76,15 @@ class MyButton extends StatelessWidget{
             // nổi trên giao diện,
             // thường dùng cho hành động chính của màn hình.
             FloatingActionButton(
-                onPressed: (){print("FloatingActionButton");},
-                child: Icon(Icons.add),
+              onPressed: (){print("FloatingActionButton");},
+              child: Icon(Icons.add),
             )
 
 
 
 
           ]
-        ),
+      ),
       ),
 
       floatingActionButton: FloatingActionButton(

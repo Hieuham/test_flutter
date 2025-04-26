@@ -18,10 +18,10 @@ class MyContainer extends StatelessWidget{
         elevation: 4,
         actions: [
           IconButton(
-              onPressed:() {
-                print("b1");
-              },
-              icon: Icon(Icons.search),
+            onPressed:() {
+              print("b1");
+            },
+            icon: Icon(Icons.search),
           ),
           IconButton(
             onPressed: (){
@@ -39,34 +39,34 @@ class MyContainer extends StatelessWidget{
       ),
 
       body: Center(
-          child: Container(
-            width: 300,
-            height: 200,
-            padding: const EdgeInsets.all(20),
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.yellow,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.purpleAccent.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3),
-                  )
-                ]
-            ),
+        child: Container(
+          width: 300,
+          height: 200,
+          padding: const EdgeInsets.all(20),
+          margin: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.purpleAccent.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                )
+              ]
+          ),
 
-            child: Align(
-              alignment: Alignment.center,
-              child: const Text(
-                  "Nguyễn Trung Hiếu",
-                style: TextStyle(
-                  color: Colors.purpleAccent,
-                  fontSize: 18,
-                ),
+          child: Align(
+            alignment: Alignment.center,
+            child: const Text(
+              "Nguyễn Trung Hiếu",
+              style: TextStyle(
+                color: Colors.purpleAccent,
+                fontSize: 18,
               ),
             ),
+          ),
         ),
       ),
 

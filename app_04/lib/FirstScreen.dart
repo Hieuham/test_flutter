@@ -10,7 +10,7 @@ class FirstScreen extends StatelessWidget {
       ),
       body: Center(
         child: ElevatedButton(
-          child: Text('Launch screen'),
+            child: Text('Launch screen'),
             onPressed: () {
               Navigator.push(
                 context,
