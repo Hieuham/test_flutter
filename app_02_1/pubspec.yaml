@@ -23,7 +23,23 @@ environment:
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# consider running `flutter pub upgrade --major-versions`. AlteI/Choreographer(13331): Skipped 57 frames!  The application may be doing too much work on its main thread.
+#E/flutter (13331): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: PlatformException(java.lang.Exception: Failed to load FirebaseOptions from resource. Check that you have defined values.xml correctly., Exception, Cause: null, Stacktrace: java.lang.Exception: Failed to load FirebaseOptions from resource. Check that you have defined values.xml correctly.
+#E/flutter (13331): 	at io.flutter.plugins.firebase.core.FlutterFirebaseCorePlugin.lambda$optionsFromResource$4$io-flutter-plugins-firebase-core-FlutterFirebaseCorePlugin(FlutterFirebaseCorePlugin.java:207)
+#E/flutter (13331): 	at io.flutter.plugins.firebase.core.FlutterFirebaseCorePlugin$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)
+#E/flutter (13331): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+#E/flutter (13331): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+#E/flutter (13331): 	at java.lang.Thread.run(Thread.java:1119)
+#E/flutter (13331): , null)
+#E/flutter (13331): #0      FirebaseCoreHostApi.optionsFromResource (package:firebase_core_platform_interface/src/pigeon/messages.pigeon.dart:242:7)
+#E/flutter (13331): <asynchronous suspension>
+#E/flutter (13331): #1      MethodChannelFirebase.initializeApp (package:firebase_core_platform_interface/src/method_channel/method_channel_firebase.dart:89:25)
+#E/flutter (13331): <asynchronous suspension>
+#E/flutter (13331): #2      Firebase.initializeApp (package:firebase_core/src/firebase.dart:43:31)
+#E/flutter (13331): <asynchronous suspension>
+#E/flutter (13331): #3      main (package:app_02_1/main.dart:7:3)
+#E/flutter (13331): <asynchronous suspension>
+#E/flutter (13331): rnatively,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
@@ -39,6 +55,14 @@ dependencies:
   dio: ^5.8.0+1
   flutter_colorpicker: ^1.1.0
   shared_preferences: ^2.5.3
+
+  firebase_core: ^2.22.0
+  firebase_auth: ^4.14.0
+  google_sign_in: ^6.1.6
+  cloud_firestore: ^4.13.1
+  the_apple_sign_in: ^1.1.1
+  flutter_facebook_auth: ^7.1.1
+  file_picker: ^10.1.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -60,11 +84,14 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/google_logo.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
