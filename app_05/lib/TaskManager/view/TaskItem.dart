@@ -21,21 +21,28 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Màu theo mức độ ưu tiên
     Color priorityColor;
+    Color backgroundColor;
     switch (task.priority) {
       case 1:
         priorityColor = Colors.green.shade400;
+        backgroundColor = Colors.green.shade100;
         break;
       case 2:
         priorityColor = Colors.orange.shade500;
+        backgroundColor = Colors.orange.shade100;
         break;
       case 3:
         priorityColor = Colors.red.shade500;
+        backgroundColor = Colors.red.shade100;
         break;
       default:
         priorityColor = Colors.grey.shade400;
+        backgroundColor = Colors.grey.shade100;
     }
 
+    // Màu trạng thái
     Color statusColor;
     switch (task.status) {
       case 'Cần làm':
@@ -68,105 +75,86 @@ class TaskItem extends StatelessWidget {
         ),
         padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: priorityColor, width: 2),
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(12.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            )
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 6,
+              offset: Offset(0, 4),
+            ),
           ],
         ),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Thanh màu bên trái
-            Container(
-              width: 6,
-              height: 100,
-              decoration: BoxDecoration(
-                color: priorityColor,
-                borderRadius: BorderRadius.circular(4),
+            Text(
+              task.title,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                decoration: task.completed ? TextDecoration.lineThrough : null,
               ),
             ),
-            SizedBox(width: 12),
-            // Nội dung task
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            SizedBox(height: 6),
+            if (task.description != null && task.description!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6.0),
+                child: Text(
+                  task.description!,
+                  style: TextStyle(fontSize: 14),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            Row(
+              children: [
+                Icon(Icons.flag, size: 16, color: priorityColor),
+                SizedBox(width: 4),
+                Text('Ưu tiên: ${task.priority}'),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.info, size: 16, color: statusColor),
+                SizedBox(width: 4),
+                Text(
+                  'Trạng thái: ${task.status}',
+                  style: TextStyle(color: statusColor),
+                ),
+              ],
+            ),
+            if (task.dueDate != null)
+              Row(
                 children: [
-                  Text(
-                    task.title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      decoration: task.completed ? TextDecoration.lineThrough : null,
-                    ),
-                  ),
-                  SizedBox(height: 6),
-                  if (task.description != null && task.description!.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
-                      child: Text(
-                        task.description!,
-                        style: TextStyle(fontSize: 14),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  Row(
-                    children: [
-                      Icon(Icons.flag, size: 16, color: priorityColor),
-                      SizedBox(width: 4),
-                      Text('Ưu tiên: ${task.priority}'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.info, size: 16, color: statusColor),
-                      SizedBox(width: 4),
-                      Text(
-                        'Trạng thái: ${task.status}',
-                        style: TextStyle(color: statusColor),
-                      ),
-                    ],
-                  ),
-                  if (task.dueDate != null)
-                    Row(
-                      children: [
-                        Icon(Icons.calendar_today, size: 16, color: Colors.grey),
-                        SizedBox(width: 4),
-                        Text('Hạn: ${task.dueDate!.toLocal().toString().split(' ')[0]}'),
-                      ],
-                    ),
-                  SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        tooltip: 'Hoàn thành',
-                        icon: Icon(
-                          task.completed ? Icons.check_box : Icons.check_box_outline_blank,
-                          color: Colors.green,
-                        ),
-                        onPressed: () => onComplete(task.id!),
-                      ),
-                      IconButton(
-                        tooltip: 'Chỉnh sửa',
-                        icon: Icon(Icons.edit, color: Colors.blue),
-                        onPressed: () => onEdit(task),
-                      ),
-                      IconButton(
-                        tooltip: 'Xóa',
-                        icon: Icon(Icons.delete, color: Colors.red),
-                        onPressed: () => _showDeleteConfirmationDialog(context),
-                      ),
-                    ],
-                  ),
+                  Icon(Icons.calendar_today, size: 16, color: Colors.grey),
+                  SizedBox(width: 4),
+                  Text('Hạn: ${task.dueDate!.toLocal().toString().split(' ')[0]}'),
                 ],
               ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  tooltip: 'Hoàn thành',
+                  icon: Icon(
+                    task.completed ? Icons.check_box : Icons.check_box_outline_blank,
+                    color: Colors.green,
+                  ),
+                  onPressed: () => onComplete(task.id!),
+                ),
+                IconButton(
+                  tooltip: 'Chỉnh sửa',
+                  icon: Icon(Icons.edit, color: Colors.blue),
+                  onPressed: () => onEdit(task),
+                ),
+                IconButton(
+                  tooltip: 'Xóa',
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  onPressed: () => _showDeleteConfirmationDialog(context),
+                ),
+              ],
             ),
           ],
         ),
